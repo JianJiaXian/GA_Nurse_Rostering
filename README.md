@@ -6,7 +6,7 @@ This project applies a genetic algorithm to solve the **NP-hard nurse rostering 
   <img src="./readme_img/results.png" alt="Results Overview" width="700"/>
 </p>
 
-📄 For full technical details, see the [Final Paper](https://github.com/chia-shein/Genetic_algorithm-nurse-rostering/blob/main/Final_Project_Paper.pdf)
+ For full technical details, see the [Final Paper](https://github.com/chia-shein/Genetic_algorithm-nurse-rostering/blob/main/Final_Project_Paper.pdf)
 
 ---
 
@@ -115,10 +115,7 @@ This combination achieved:
 ##  Final Output
 
 We generate a 31-day shift schedule and export the results in Excel format for easy reference by each nurse.
-
-<p align="center">
-  <img src="./readme_img/schedule_example.png" alt="Schedule Output" width="800"/>
-</p>
+see the [Final Results](https://github.com/chia-shein/Genetic_algorithm-nurse-rostering/blob/main/solution.csv)
 
 ---
 
