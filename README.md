@@ -1,10 +1,12 @@
 #  Genetic Algorithm for Nurse Rostering & Scheduling
 
-This project applies a genetic algorithm to solve the **NP-hard nurse rostering problem**, with the goal of minimizing patient wait times and medical staff overtime, while respecting legal and preference constraints.
+This project applies a genetic algorithm to solve the **NP-hard nurse rostering problem**, minimizing patient wait times and staff overtime while complying with real-world constraints.
 
-![Result Overview](./readme_img/results.png)
+<p align="center">
+  <img src="./readme_img/results.png" alt="Results Overview" width="700"/>
+</p>
 
- For technical details, see the [Final Paper](https://github.com/chia-shein/Genetic_algorithm-nurse-rostering/blob/main/Final_Project_Paper.pdf)
+📄 For full technical details, see the [Final Paper](https://github.com/chia-shein/Genetic_algorithm-nurse-rostering/blob/main/Final_Project_Paper.pdf)
 
 ---
 
@@ -20,15 +22,9 @@ Hospitals often rely on manual experience for shift planning, which may lead to:
 - Excessive staff overtime
 - Suboptimal satisfaction and performance
 
-This project uses **genetic algorithms** to provide objective, optimized schedules in reasonable time.
-
----
-
-##  Dependencies
-
-```bash
-pip install deap seaborn
-```
+<p align="center">
+  <img src="./readme_img/GA_flow.png" alt="GA flow diagram" width="300"/>
+</p>
 
 ---
 
@@ -45,113 +41,106 @@ Each shift is encoded as a 3-bit vector:
 | Night | [0, 0, 1]   | 23:00–07:00    |
 | Off   | [0, 0, 0]   | —              |
 
-<img src="./readme_img/Binary_Representation.png" width="400"/>
+<p align="center">
+  <img src="./readme_img/Binary_Representation.png" alt="Binary Representation" width="400"/>
+</p>
 
 ---
 
-##  Problem Constraints
+##  Constraints
 
 ###  Hard Constraints
 1. A nurse can only work one shift per day.
 2. No consecutive shifts allowed (e.g., afternoon + night).
-3. Each nurse must have at least **2 days off** per week.
-4. **Minimum staff** required per shift:
-   - Early: 2–4 nurses
-   - Afternoon: 2–4 nurses
-   - Night: 1–2 nurses
+3. At least **2 days off** per nurse per week.
+4. **Minimum staff per shift**:
+   - Early: 2–4
+   - Afternoon: 2–4
+   - Night: 1–2
 
 ###  Soft Constraints
-- Nurse schedule preferences
+- Nurse preferences (see input data format)
 
 ---
 
-##  Data Format
+##  Input Data Example
 
-### `data.json` contains:
+### Nurse Info
 
-- **Nurse Info**  
-  ![](./readme_img/nurse_related.png)
+<p align="center">
+  <img src="./readme_img/nurse_related.png" alt="Nurse Info" width="500"/>
+</p>
 
-- **Rostering Info**  
-  ![](./readme_img/rostering_related.png)
+### Rostering Info
 
-- **Genetic Algorithm Config**  
-  ![](./readme_img/GA_related.png)
+<p align="center">
+  <img src="./readme_img/rostering_related.png" alt="Rostering Info" width="500"/>
+</p>
 
----
+### GA Config
 
-##  Genetic Algorithm Overview
-
-<img src="./readme_img/GA_flow.png" width="600"/>
-
-### Main Parameters
-
-| Days | Population | Generations | Crossover | Mutation |
-|------|------------|-------------|-----------|----------|
-| 31   | 300        | 500         | 0.9       | 0.1      |
-
-### Operators
-
-| Selection          | Crossover               | Mutation            |
-|--------------------|-------------------------|---------------------|
-| Random             | Two-point               | FlipBit             |
-| Roulette Wheel     | Uniform (0.3–0.7)       | Gaussian Mutation   |
-| Fitness Best/Worst | PMX, Order Crossover    | Inversion Mutation  |
+<p align="center">
+  <img src="./readme_img/GA_related.png" alt="GA Config" width="400"/>
+</p>
 
 ---
 
-##  Running the Code
+##  GA Process Flow
 
-```bash
-python rostering.py
-```
+<p align="center">
+  <img src="./readme_img/Exp_flow.png" alt="GA Process Flow" width="650"/>
+</p>
 
 ---
 
 ##  Experimental Results
 
-### Result Summary
+We compare multiple configurations using different combinations of selection, crossover, and mutation strategies.
 
-| ID | Selection | Crossover | Mutation | Min Fitness | Mean Fitness |
-|----|-----------|-----------|----------|-------------|--------------|
-| a  | Random    | Two-point | FlipBit  | 319.0       | 542.48       |
-| f  | Fitness Best | Uniform(0.5) | FlipBit | **11.0** | **23.01**   |
-| g  | Fitness Best | Uniform(0.7) | FlipBit | **8.0**  | **17.67**   |
+<p align="center">
+  <img src="./readme_img/results.png" alt="Experiment Plots" width="850"/>
+</p>
 
-> Best results were achieved using:  
-> **Fitness Best Selection + Uniform Crossover (0.7) + FlipBit Mutation**
+### Best Configuration:
+- Selection: **Fitness Best**
+- Crossover: **Uniform (0.7)**
+- Mutation: **FlipBit**
 
-We export the final 31-day schedule to Excel for easy viewing by nurses.
-
-<img src="./readme_img/Exp_flow.png" width="600"/>
+This combination achieved:
+- **Min Fitness**: 8.0
+- **Mean Fitness**: 17.67
 
 ---
 
-##  Conclusion
+##  Final Output
 
-- A binary genetic encoding was used to model the scheduling task.
-- Domain-specific constraints and nurse preferences were embedded into the fitness function.
-- The best-performing GA configuration significantly reduced scheduling conflicts and overtime.
+We generate a 31-day shift schedule and export the results in Excel format for easy reference by each nurse.
+
+<p align="center">
+  <img src="./readme_img/schedule_example.png" alt="Schedule Output" width="800"/>
+</p>
+
+---
+
+##  How to Run
+
+```bash
+pip install deap seaborn
+python rostering.py
+```
 
 ---
 
 ##  Future Work
 
-1. Extend to **multi-objective optimization**.
-2. Improve handling of real-world dynamic events.
-3. Tailor constraints for specific hospital policies.
+1. Extend to multi-objective optimization.
+2. Support real-time scheduling and emergencies.
+3. Improve fitness functions with more real-world variables.
 
 ---
 
-##  Related Works
+##  References
 
-- T.C. Wong et al., *A Two-Stage Heuristic Approach for Nurse Scheduling*, 2014.
-- Ziyi Chen et al., *Neural-Assisted Rostering*, 2022.
-- H. Kawanaka et al., *Genetic Algorithm with Constraints for Nurse Scheduling*, 2001.
-- More in the final report.
-
----
-
-## 📂 Dataset
-
-🔗 [International Nurse Rostering Benchmarks](http://www.schedulingbenchmarks.org/nrp/instances1_24.html)
+- T.C. Wong et al., *Nurse Scheduling in ED*, 2014.
+- Ziyi Chen et al., *Neural Rostering*, 2022.
+- H. Kawanaka et al., *GA with Constraints for Nurse Scheduling*, 2001.
